@@ -1,0 +1,34 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+
+# make configuration of driver
+options = webdriver.ChromeOptions()
+options.add_argument("user-agent=Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:84.0) Gecko/20100101 Firefox/84.0")
+options.add_argument("--disable-blink-features=AutomationControlled")
+s = Service(executable_path="chromedriver.exe")
+driver = webdriver.Chrome(service=s, options=options)
+
+
+def main():
+    try:
+        driver.get('https://inboxdata.top/pay/link.txt')
+        # get url from script
+        url = driver.find_element(By.TAG_NAME, value='pre').get_attribute("textContent")
+        driver.get(url=url)
+        driver.implicitly_wait(10)
+        # click on button
+        driver.find_element(By.CLASS_NAME, value='p-l-30').click()
+        driver.implicitly_wait(10)
+        # write to file new link from page
+        with open('out.txt', 'w') as file:
+            file.write(driver.current_url)
+    except Exception as ex:
+        print(ex)
+    finally:
+        driver.close()
+        driver.quit()
+
+
+if __name__ == '__main__':
+    main()
