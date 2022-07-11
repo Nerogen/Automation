@@ -21,7 +21,7 @@ def main():
         driver.find_element(By.CLASS_NAME, value='p-l-30').click()
         driver.implicitly_wait(10)
         # write to file new link from page
-        with open('out.txt', 'w') as file:
+        with open('/var/www/inboxdata_to_usr/data/www/inboxdata.top/pay/url.txt', 'w') as file:
             file.write(driver.current_url)
     except Exception as ex:
         print(ex)
